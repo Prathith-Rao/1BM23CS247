@@ -1,1 +1,21 @@
-
+void moveZeroes(int* nums, int numsSize) {
+    int count=0;
+    int i,j;
+    i=0;
+    while(i<numsSize)
+    {
+        if(nums[i]==0){
+        for(j=i;j<numsSize-1;j++)
+        {
+            nums[j]=nums[j+1];
+        }
+        count++;
+        numsSize--;
+        }
+        if(nums[i]==0)
+            continue;
+        i++;
+    }
+    for(i=numsSize;i<numsSize+count;i++)
+        nums[i]=0;
+}
