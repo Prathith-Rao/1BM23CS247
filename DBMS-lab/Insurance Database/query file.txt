@@ -1,0 +1,293 @@
+mysql> create database insurance;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use insurance
+Database changed
+mysql> create table person(
+    -> driver_id varchar
+    -> (10),
+    -> name varchar(10),
+    -> address varchar(10),
+    -> primary key(driver_id));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc person;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| driver_id | varchar(10) | NO   | PRI | NULL    |       |
+| name      | varchar(10) | YES  |     | NULL    |       |
+| address   | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table car(
+    -> reg_num varchar(10),
+    -> model varchar(10),
+    -> year int,
+    -> primary key(reg_num));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table accident(
+    -> report_num int,
+    -> accident_date date,
+    -> location varchar(10),
+    -> primary key(report_num));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table owns(
+    -> driver_id varchar(10),
+    -> reg_num varchar(10),
+    -> primary key(driver_id,reg_num));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table owns;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table owns(
+    -> driver_id varchar(10),
+    -> reg_num varchar(10),
+    -> primary key(driver_id,reg_num),
+    -> foreign key(driver_id) reference person(driver_id),
+    -> foreign key(reg_num) reference person(reg_num));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'reference person(driver_id),
+foreign key(reg_num) reference person(reg_num))' at line 5
+mysql> create table owns(
+    -> driver_id varchar(10),
+    -> reg_num varchar(10),
+    -> primary key(driver_id,reg_num),
+    -> foreign key(driver_id) references person(driver_id),
+    -> foreign key(reg_num) references person(reg_num));
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'reg_num' for constraint 'owns_ibfk_2' in the referenced table 'person'
+mysql> create table owns(
+    -> driver_id varchar(10),
+    -> reg_num varchar(10),
+    -> primary key(driver_id,reg_num),
+    -> foreign key(driver_id) references person(driver_id),
+    -> foreign key(reg_num) references car(reg_num));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table participated(driver_id varchar(10),
+    -> reg_num varchar(10),
+    -> report_num varchar(10),
+    -> damage_amount ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> create table participated(driver_id varchar(10),
+    -> reg_num varchar(10),
+    -> report_num int,
+    -> damage_amount int,
+    -> primary key(driver_id,reg_num,report_num),
+    -> foreign key(driver_id) references person(driver_id),
+    -> foreign key(reg_num) references car(reg_num),
+    -> foreign key(report_num) references accident(report_num));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into person values(
+    -> 2024101,'a','bengaluru');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into person values(
+    -> 2024102,'b','mysore');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into person values(
+    -> 2024103,'c','hassan');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into person values(
+    -> 2024104,'d','bengaluru');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into person values(
+    -> 2024105,'e','kolar');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into car values(
+    -> 'ka2025','innova',2005);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into car values(
+    -> 'ka2024','alto',2015);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into car values(
+    -> 'ka2019','thar',2020);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into car values(
+    -> 'ka2022','alto',2021);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into cars values(
+    -> 'ka2026','swift',2024);
+ERROR 1146 (42S02): Table 'insurance.cars' doesn't exist
+mysql> insert into car values(
+    -> 'ka2026','swift',2024);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into accident values(
+    -> 101,'2024-01-15','bengaluru');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into accident values(
+    -> 102,'2024-02-15','bengaluru');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into accident values(
+    -> 103,'2024-02-10','bengaluru');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from person;
++-----------+------+-----------+
+| driver_id | name | address   |
++-----------+------+-----------+
+| 2024101   | a    | bengaluru |
+| 2024102   | b    | mysore    |
+| 2024103   | c    | hassan    |
+| 2024104   | d    | bengaluru |
+| 2024105   | e    | kolar     |
++-----------+------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from car;
++---------+--------+------+
+| reg_num | model  | year |
++---------+--------+------+
+| ka2019  | thar   | 2020 |
+| ka2022  | alto   | 2021 |
+| ka2024  | alto   | 2015 |
+| ka2025  | innova | 2005 |
+| ka2026  | swift  | 2024 |
++---------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into owns values(
+    -> '2024101','ka2019');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into owns values(
+    -> '2024102','ka2022');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into owns values(
+    -> '2024103','ka2024');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into owns values(
+    -> '2024104','ka2025');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into owns values(
+    -> '2024105','ka2026');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into participated values(
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from owns;
++-----------+---------+
+| driver_id | reg_num |
++-----------+---------+
+| 2024101   | ka2019  |
+| 2024102   | ka2022  |
+| 2024103   | ka2024  |
+| 2024104   | ka2025  |
+| 2024105   | ka2026  |
++-----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from accident;
++------------+---------------+-----------+
+| report_num | accident_date | location  |
++------------+---------------+-----------+
+|        101 | 2024-01-15    | bengaluru |
+|        102 | 2024-02-15    | bengaluru |
+|        103 | 2024-02-10    | bengaluru |
++------------+---------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> insert into participated values(
+    -> '2024102','ka2022',101,15000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into participated values(
+    -> '2024101','ka2019',102,10000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into participated values(
+    -> '2024105','ka2026',103,30000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from participated;
++-----------+---------+------------+---------------+
+| driver_id | reg_num | report_num | damage_amount |
++-----------+---------+------------+---------------+
+| 2024101   | ka2019  |        102 |         10000 |
+| 2024102   | ka2022  |        101 |         15000 |
+| 2024105   | ka2026  |        103 |         30000 |
++-----------+---------+------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select (accident_date,location) from accident;
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select accident_date,location from accident;
++---------------+-----------+
+| accident_date | location  |
++---------------+-----------+
+| 2024-01-15    | bengaluru |
+| 2024-02-15    | bengaluru |
+| 2024-02-10    | bengaluru |
++---------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> update participated
+    -> set damage_amount=25000
+    -> where driver_id='2024101';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from participated;
++-----------+---------+------------+---------------+
+| driver_id | reg_num | report_num | damage_amount |
++-----------+---------+------------+---------------+
+| 2024101   | ka2019  |        102 |         25000 |
+| 2024102   | ka2022  |        101 |         15000 |
+| 2024105   | ka2026  |        103 |         30000 |
++-----------+---------+------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into accident values(
+    -> 104,'2024-10-01','iti');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> update participated
+    -> set driver_id='2024103',re_num='2024',report_num=104,damage_amount=40000
+    -> ;
+ERROR 1054 (42S22): Unknown column 're_num' in 'field list'
+mysql> insert into participated values(
+    -> '2024103','ka2024',104,40000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select driver_id from participated
+    -> where damage_amount>=25000;
++-----------+
+| driver_id |
++-----------+
+| 2024101   |
+| 2024103   |
+| 2024105   |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from participated;
++-----------+---------+------------+---------------+
+| driver_id | reg_num | report_num | damage_amount |
++-----------+---------+------------+---------------+
+| 2024101   | ka2019  |        102 |         25000 |
+| 2024102   | ka2022  |        101 |         15000 |
+| 2024103   | ka2024  |        104 |         40000 |
+| 2024105   | ka2026  |        103 |         30000 |
++-----------+---------+------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql>
