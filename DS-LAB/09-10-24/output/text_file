@@ -1,0 +1,229 @@
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 1
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 2
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 3
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 4
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 5
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 6
+
+Stack is full,overflow condition
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Element 5 has been successfully popped
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Element 4 has been successfully popped
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Element 3 has been successfully popped
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Element 2 has been successfully popped
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Element 1 has been successfully popped
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Stack is empty,underflow condition
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 1
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 2
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 3
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 4
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 5
+
+Element successfully pushed to stack
+1.push
+2.pop
+3.display
+4.exit
+Enter :1
+
+Enter the element to push 6
+
+Stack is full,overflow condition
+1.push
+2.pop
+3.display
+4.exit
+Enter :3
+54321
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Element 5 has been successfully popped
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Element 4 has been successfully popped
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Element 3 has been successfully popped
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Element 2 has been successfully popped
+1.push
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+4.exit
+Enter :2
+
+Enter :2
+
+Element 1 has been successfully popped
+1.push
+1.push
+2.pop
+3.display
+4.exit
+Enter :2
+
+Stack is empty,underflow condition
+1.push
+2.pop
+3.display
+4.exit
+Enter :3
+3.display
+4.exit
+Enter :3
+Enter :3
+
+
+stack is empty,underflow condition
+1.push
+2.pop
+3.display
+4.exit
+Enter :5
+
+Invalid input
+1.push
+2.pop
+3.display
+4.exit
+Enter :4
