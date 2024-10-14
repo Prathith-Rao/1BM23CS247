@@ -21,7 +21,7 @@ public class Student {
         System.out.print("Enter Name: ");
         name = scanner.nextLine();
         
-        for (int i = 0; i < credits.length; i++) {
+        for (int i = 0; i < numSubjects; i++) {
             System.out.print("Enter credits for subject " + (i + 1) + ": ");
             credits[i] = scanner.nextInt();
             
@@ -35,7 +35,7 @@ public class Student {
         System.out.println("USN: " + usn);
         System.out.println("Name: " + name);
         
-        for (int i = 0; i < credits.length; i++) {
+        for (int i = 0; i < numSubjects; i++) {
             System.out.println("Subject " + (i + 1) + ": Credits = " + credits[i] + ", Marks = " + marks[i]);
         }
     }
