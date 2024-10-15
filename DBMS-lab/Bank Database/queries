@@ -72,6 +72,16 @@ insert into loan values(3,"SBI_ShivajiRoad",3000);
 insert into loan values(4,"SBI_Parliamentroad",4000);
 insert into loan values(5,"SBI_Jantarmantar",5000);
 
+select * from branch;
+
+select * from bankaccount;
+
+select * from bankcustomer;
+
+select * from depositer;
+
+select * from loan;
+
 select branch_name,(assets/100000) as assets_in_lakhs from branch;
 
 select d.customername from depositer d,bankaccount b
