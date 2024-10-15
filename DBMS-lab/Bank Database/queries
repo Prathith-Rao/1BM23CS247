@@ -34,7 +34,7 @@ amount int,
 primary key(loan_number),
 foreign key(branch_name) references branch(branch_name));
 
-insert into branch values("SBI_Chamrajpet","bangalore",50000);
+insert into branch values("SBI_Chamrajpet","Bangalore",50000);
 insert into branch values("SBI_ResidencyRoad","Bangalore",10000);
 insert into branch values("SBI_ShivajiRoad","Bombay",20000);
 insert into branch values("SBI_Parliamentroad","Delhi",10000);
