@@ -1,60 +1,56 @@
-
-abstract class Shape {
-    int dimension1, dimension2;
-    
-    abstract void printArea();
+abstract class shape{
+    int l,b;
+    abstract void printarea();
 }
-
-class Rectangle extends Shape {
-
-    Rectangle(int length, int width) {
-        this.dimension1 = length;
-        this.dimension2 = width;
+class rectangle extends shape{
+    rectangle(int length,int breadth)
+    {
+        this.l=length;
+        this.b=breadth;
     }
-    
     @Override
-    void printArea() {
-        int area = dimension1 * dimension2;
-        System.out.println("Area of Rectangle: " + area);
+    void printarea()
+    {
+        int area=l*b;
+        System.out.println("Area of the rectangle ="+area);
     }
 }
-
-class Triangle extends Shape {
-
-    Triangle(int base, int height) {
-        this.dimension1 = base;
-        this.dimension2 = height;
+class triangle extends shape{
+    triangle(int height,int width)
+    {
+        this.l=height;
+        this.b=width;
     }
-    
     @Override
-    void printArea() {
-        double area = 0.5 * dimension1 * dimension2;
-        System.out.println("Area of Triangle: " + area);
+    void printarea()
+    {
+        double area=0.5*l*b;
+        System.out.println("Area of the triangle ="+area);
     }
 }
-
-class Circle extends Shape {
-    
-    Circle(int radius) {
-        this.dimension1 = radius;
+class circle extends shape{
+    circle(int radius)
+    {
+        this.l=radius;
     }
-    
     @Override
-    void printArea() {
-        double area = Math.PI * dimension1 * dimension1;
-        System.out.println("Area of Circle: " + area);
+    void printarea()
+    {
+        double area=3.14*l*l;
+        System.out.println("Area of the circle ="+area);
     }
 }
-
-public class Main {
-    public static void main(String[] args) {
-
-        Shape rectangle = new Rectangle(5, 10);
-        Shape triangle = new Triangle(6, 8);
-        Shape circle = new Circle(7);
+public class abstract_class
+{
+    public static void main(String []args)
+    {
         
-        rectangle.printArea();
-        triangle.printArea();
-        circle.printArea();
+        shape rectangle = new rectangle(5, 10);
+        shape triangle = new triangle(6, 8);
+        shape circle = new circle(7);
+        
+        rectangle.printarea();
+        triangle.printarea();
+        circle.printarea();
     }
 }
