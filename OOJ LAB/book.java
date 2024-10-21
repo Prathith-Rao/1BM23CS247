@@ -6,7 +6,6 @@ class Book {
     private double price;
     private int num_pages;
 
-    // Constructor to set the values
     public Book(String name, String author, double price, int num_pages) {
         this.name = name;
         this.author = author;
@@ -14,7 +13,6 @@ class Book {
         this.num_pages = num_pages;
     }
 
-    // Getters
     public String getName() {
         return name;
     }
@@ -31,7 +29,6 @@ class Book {
         return num_pages;
     }
 
-    // Setters
     public void setName(String name) {
         this.name = name;
     }
@@ -48,7 +45,6 @@ class Book {
         this.num_pages = num_pages;
     }
 
-    // toString() method to display book details
     @Override
     public String toString() {
         return "Book Name: " + name + "\nAuthor: " + author + "\nPrice: $" + price + "\nNumber of Pages: " + num_pages;
@@ -61,12 +57,12 @@ public class BookDemo {
 
         System.out.print("Enter number of books: ");
         int n = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        scanner.nextLine();  
 
-        // Array to store book objects
+
         Book[] books = new Book[n];
 
-        // Input book details
+
         for (int i = 0; i < n; i++) {
             System.out.println("Enter details for book " + (i + 1) + ":");
             System.out.print("Name: ");
@@ -77,13 +73,13 @@ public class BookDemo {
             double price = scanner.nextDouble();
             System.out.print("Number of Pages: ");
             int num_pages = scanner.nextInt();
-            scanner.nextLine();  // Consume newline
+            scanner.nextLine();  
 
-            // Create a new Book object and store in array
+
             books[i] = new Book(name, author, price, num_pages);
         }
 
-        // Display book details
+
         for (int i = 0; i < n; i++) {
             System.out.println("\nDetails of Book " + (i + 1) + ":");
             System.out.println(books[i].toString());
