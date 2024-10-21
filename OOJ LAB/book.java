@@ -1,55 +1,94 @@
 import java.util.Scanner;
-public class book {
-    String name;
-    String author;
-    int price;
-    int num_pages;
-    public book()
-    {
-        name="";
-        author="";
-        price=0;
-        num_pages=0;
-    }
-    public void set_details()
-    {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the book name :");
-        name=sc.nextLine();
-        System.out.println("Enter the author name :");
-        author=sc.nextLine();
-        System.out.println("Enter the price of the book :");
-        price=sc.nextInt();
-        System.out.println("Enter the number of pages in the book :");
-        num_pages=sc.nextInt();
-    }
-    public void get_details()
-    {
-        System.out.println("Name = "+name"\nauthor = "+author+"Price ="+price+"\nNumber of pages = "+num_pages);
+
+class Book {
+    private String name;
+    private String author;
+    private double price;
+    private int num_pages;
+
+    // Constructor to set the values
+    public Book(String name, String author, double price, int num_pages) {
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.num_pages = num_pages;
     }
 
-    public String toString()
-    {
-        return "Name="+this.name+"\nauthor="+this.author+"\nPrice="+this.price+"\nNumber of pages="+this.num_pages;
+    // Getters
+    public String getName() {
+        return name;
     }
-    public static void main(String[] args)
-    {
-        int i;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the number of books :");
-        int num=sc.nextInt();
-        book b[]=new book[num];
-        for(i=0;i<num;i++)
-        {
-            System.out.println("Enter the details of book "+(i+1));
-            b[i] = new book();
-            b[i].set_details();
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getNumPages() {
+        return num_pages;
+    }
+
+    // Setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setNumPages(int num_pages) {
+        this.num_pages = num_pages;
+    }
+
+    // toString() method to display book details
+    @Override
+    public String toString() {
+        return "Book Name: " + name + "\nAuthor: " + author + "\nPrice: $" + price + "\nNumber of Pages: " + num_pages;
+    }
+}
+
+public class BookDemo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter number of books: ");
+        int n = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+
+        // Array to store book objects
+        Book[] books = new Book[n];
+
+        // Input book details
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter details for book " + (i + 1) + ":");
+            System.out.print("Name: ");
+            String name = scanner.nextLine();
+            System.out.print("Author: ");
+            String author = scanner.nextLine();
+            System.out.print("Price: ");
+            double price = scanner.nextDouble();
+            System.out.print("Number of Pages: ");
+            int num_pages = scanner.nextInt();
+            scanner.nextLine();  // Consume newline
+
+            // Create a new Book object and store in array
+            books[i] = new Book(name, author, price, num_pages);
         }
-        System.out.println("The details of "+ num+" books are :");
-        for(i=0;i<num;i++)
-        {
-            System.out.println("Book "+(i+1));
-            System.out.println(b[i].toString());
+
+        // Display book details
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nDetails of Book " + (i + 1) + ":");
+            System.out.println(books[i].toString());
         }
+
+        scanner.close();
     }
 }
