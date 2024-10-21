@@ -47,7 +47,7 @@ class Book {
 
     @Override
     public String toString() {
-        return "Book Name: " + name + "\nAuthor: " + author + "\nPrice: $" + price + "\nNumber of Pages: " + num_pages;
+        return "Book Name: " + name + "\nAuthor: " + author + "\nPrice: " + price + "\nNumber of Pages: " + num_pages;
     }
 }
 
