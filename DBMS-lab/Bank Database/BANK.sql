@@ -57,7 +57,7 @@ insert into bankaccount values(8,"SBI_ResidencyRoad",4000);
 insert into bankaccount values(9,"SBI_Parliamentroad",3000);
 insert into bankaccount values(10,"SBI_ResidencyRoad",5000);
 insert into bankaccount values(11,"SBI_Jantarmantar",2000);
-
+                                
 insert into bankcustomer values("Avinash","BUll_temple_Road","Bangalore");
 insert into bankcustomer values("Dinesh","Bannergatta_Road","Bangalore");
 insert into bankcustomer values("Mohan","NationaCollege_Road","Bangalore");
@@ -135,5 +135,4 @@ b.customername in (select customername from depositer);
 select branch_name from branch
 where assets > all(select assets from branch 
 where branch_city="Bangalore");
-
 
