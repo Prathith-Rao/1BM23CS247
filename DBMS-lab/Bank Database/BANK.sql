@@ -34,6 +34,13 @@ amount int,
 primary key(loan_number),
 foreign key(branch_name) references branch(branch_name));
 
+create table borrower(
+loan_number int,
+customername varchar(20),
+primary key(loan_number),
+foreign key(loan_number) references loan(loan_number),
+foreign key(customername) references bankcustomer(customername));
+
 insert into branch values("SBI_Chamrajpet","Bangalore",50000);
 insert into branch values("SBI_ResidencyRoad","Bangalore",10000);
 insert into branch values("SBI_ShivajiRoad","Bombay",20000);
@@ -57,6 +64,7 @@ insert into bankcustomer values("Mohan","NationaCollege_Road","Bangalore");
 insert into bankcustomer values("Nikil","Akbar_Road","Delhi");
 insert into bankcustomer values("Ravi","Prithviraj_Road","Delhi");
 
+
 insert into depositer values("Avinash",1);
 insert into depositer values("Dinesh",2);
 insert into depositer values("Nikil",4);
@@ -72,6 +80,12 @@ insert into loan values(3,"SBI_ShivajiRoad",3000);
 insert into loan values(4,"SBI_Parliamentroad",4000);
 insert into loan values(5,"SBI_Jantarmantar",5000);
 
+insert into borrower values(1,"Mohan");
+insert into borrower values(2,"Avinash");
+insert into borrower values(3,"Dinesh");
+insert into borrower values(4,"Mohan");
+insert into borrower values(5,"Nikil");
+
 select * from branch;
 
 select * from bankaccount;
@@ -81,6 +95,8 @@ select * from bankcustomer;
 select * from depositer;
 
 select * from loan;
+
+select * from borrower;
 
 select branch_name,(assets/100000) as assets_in_lakhs from branch;
 
@@ -101,4 +117,23 @@ as select branch_name,sum(amount) from loan
 group by branch_name;
 
 select * from sum_of_loan;
-COMMIT;
+
+select distinct s.customername from depositer s
+where not exists ((select branch_name from branch where branch_city="Delhi") except (select r.branch_name from depositer t, bankaccount r 
+where t.accno=r.accno and
+s.customername=t.customername));
+
+select distinct customername from borrower
+where customername not in (select customername from depositer);
+
+select  distinct b.customername from borrower b,loan l ,depositer d,branch br
+where b.loan_number=l.loan_number and
+l.branch_name=br.branch_name and
+br.branch_city="Bangalore" and
+b.customername in (select customername from depositer);
+
+select branch_name from branch
+where assets > all(select assets from branch 
+where branch_city="Bangalore");
+
+
