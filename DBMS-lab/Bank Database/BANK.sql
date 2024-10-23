@@ -1,45 +1,57 @@
 create database bank_247;
 use bank_247;
 
-create table branch(
-branch_name varchar(30),
-branch_city varchar(25),
-assets int,
-primary key (branch_name));
+CREATE TABLE branch (
+    branch_name VARCHAR(30),
+    branch_city VARCHAR(25),
+    assets INT,
+    PRIMARY KEY (branch_name)
+);
 
-create table bankaccount(
-accno int,
-branch_name varchar(30),
-balance int,
-primary key(accno),
-foreign key(branch_name) references branch(branch_name));
+CREATE TABLE bankaccount (
+    accno INT,
+    branch_name VARCHAR(30),
+    balance INT,
+    PRIMARY KEY (accno),
+    FOREIGN KEY (branch_name)
+        REFERENCES branch (branch_name)
+);
 
-create table bankcustomer(
-customername varchar(20),
-customer_street varchar(30),
-customer_city varchar(35),
-primary key(customername));
+CREATE TABLE bankcustomer (
+    customername VARCHAR(20),
+    customer_street VARCHAR(30),
+    customer_city VARCHAR(35),
+    PRIMARY KEY (customername)
+);
 
-create table depositer(
-customername varchar(20),
-accno int,
-PRIMARY KEY(customername,accno),
-foreign key(accno) references bankaccount(accno),
-foreign key(customername) references bankcustomer(customername));
+CREATE TABLE depositer (
+    customername VARCHAR(20),
+    accno INT,
+    PRIMARY KEY (customername , accno),
+    FOREIGN KEY (accno)
+        REFERENCES bankaccount (accno),
+    FOREIGN KEY (customername)
+        REFERENCES bankcustomer (customername)
+);
 
-create table loan(
-loan_number int,
-branch_name varchar(30),
-amount int,
-primary key(loan_number),
-foreign key(branch_name) references branch(branch_name));
+CREATE TABLE loan (
+    loan_number INT,
+    branch_name VARCHAR(30),
+    amount INT,
+    PRIMARY KEY (loan_number),
+    FOREIGN KEY (branch_name)
+        REFERENCES branch (branch_name)
+);
 
-create table borrower(
-loan_number int,
-customername varchar(20),
-primary key(loan_number),
-foreign key(loan_number) references loan(loan_number),
-foreign key(customername) references bankcustomer(customername));
+CREATE TABLE borrower (
+    loan_number INT,
+    customername VARCHAR(20),
+    PRIMARY KEY (loan_number),
+    FOREIGN KEY (loan_number)
+        REFERENCES loan (loan_number),
+    FOREIGN KEY (customername)
+        REFERENCES bankcustomer (customername)
+);
 
 insert into branch values("SBI_Chamrajpet","Bangalore",50000);
 insert into branch values("SBI_ResidencyRoad","Bangalore",10000);
@@ -100,39 +112,96 @@ select * from borrower;
 
 select branch_name,(assets/100000) as assets_in_lakhs from branch;
 
-select d.customername from depositer d,bankaccount b
-where b.branch_name="SBI_ResidencyRoad" and
-d.accno=b.accno
-group by d.customername having count(d.accno)>=2;
+SELECT 
+    d.customername
+FROM
+    depositer d,
+    bankaccount b
+WHERE
+    b.branch_name = 'SBI_ResidencyRoad'
+        AND d.accno = b.accno
+GROUP BY d.customername
+HAVING COUNT(d.accno) >= 2;
+
 
 select d.customername from depositer d,bankaccount b
 where d.accno=b.accno
 group by d.customername having count(d.accno)>=2;
 
-select branch_name,sum(amount) as Total_loan_amount from loan
-group by branch_name;
+
+SELECT 
+    branch_name, SUM(amount) AS Total_loan_amount
+FROM
+    loan
+GROUP BY branch_name;
+
 
 create view sum_of_loan
 as select branch_name,sum(amount) from loan
 group by branch_name;
 
+
 select * from sum_of_loan;
+
 
 select distinct s.customername from depositer s
 where not exists ((select branch_name from branch where branch_city="Delhi") except (select r.branch_name from depositer t, bankaccount r 
 where t.accno=r.accno and
 s.customername=t.customername));
 
+
 select distinct customername from borrower
 where customername not in (select customername from depositer);
 
-select  distinct b.customername from borrower b,loan l ,depositer d,branch br
-where b.loan_number=l.loan_number and
-l.branch_name=br.branch_name and
-br.branch_city="Bangalore" and
-b.customername in (select customername from depositer);
 
-select branch_name from branch
-where assets > all(select assets from branch 
-where branch_city="Bangalore");
+SELECT DISTINCT
+    b.customername
+FROM
+    borrower b,
+    loan l,
+    depositer d,
+    branch br
+WHERE
+    b.loan_number = l.loan_number
+        AND l.branch_name = br.branch_name
+        AND br.branch_city = 'Bangalore'
+        AND b.customername IN (SELECT 
+            customername
+        FROM
+            depositer);
 
+
+SELECT 
+    branch_name
+FROM
+    branch
+WHERE
+    assets > ALL (SELECT 
+            assets
+        FROM
+            branch
+        WHERE
+            branch_city = 'Bangalore');
+
+
+DELETE FROM bankaccount 
+WHERE
+    branch_name IN (SELECT 
+        branch_name
+    FROM
+        branch
+    
+    WHERE
+        branch_city = "Bombay");
+
+
+select * from bankaccount;
+
+
+UPDATE bankaccount 
+SET 
+    balance = balance * 1.05;
+
+select * from bankaccount;
+
+commit;
