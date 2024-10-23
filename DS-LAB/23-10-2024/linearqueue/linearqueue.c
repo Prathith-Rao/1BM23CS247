@@ -35,7 +35,8 @@ void delete() {
     printf("Deleted %d from the queue.\n", queue[front]);
     front++;
     if (front > rear) {  
-        front = rear = -1;
+        front = -1;
+        rear = -1;
     }
 }
 
