@@ -21,7 +21,8 @@ void insert(int n) {
         return;
     }
     if (is_empty())  
-        front = rear = 0;
+        front = 0;
+        rear = 0;
     else
         rear = (rear + 1) % SIZE;
     queue[rear] = n;
