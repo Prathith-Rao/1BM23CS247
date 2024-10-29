@@ -1,42 +1,46 @@
 create database emp;
 use emp;
 
-create table dept(
-deptno decimal(2,0) primary key,
-dname varchar(14) default null,
-loc varchar(13) default null);
+CREATE TABLE dept (
+    deptno DECIMAL(2 , 0 ) PRIMARY KEY,
+    dname VARCHAR(14) DEFAULT NULL,
+    loc VARCHAR(13) DEFAULT NULL
+);
 
 CREATE TABLE emp (
-empno decimal(4,0) primary key,
-ename varchar(10) default NULL,
-mgr_no decimal(4,0) default NULL,
-hiredate date default NULL,
-sal decimal(7,2) default NULL,
-deptno decimal(2,0) references dept(deptno) on delete cascade on update cascade
+    empno DECIMAL(4 , 0 ) PRIMARY KEY,
+    ename VARCHAR(10) DEFAULT NULL,
+    mgr_no DECIMAL(4 , 0 ) DEFAULT NULL,
+    hiredate DATE DEFAULT NULL,
+    sal DECIMAL(7 , 2 ) DEFAULT NULL,
+    deptno DECIMAL(2 , 0 ) REFERENCES dept (deptno)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-create table incentives (
-empno decimal(4,0) references emp(empno) on delete cascade on update cascade,
-incentive_date date,
-incentive_amount decimal(10,2),
-primary key(empno,incentive_date)
+CREATE TABLE incentives (
+    empno DECIMAL(4 , 0 ) REFERENCES emp (empno)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    incentive_date DATE,
+    incentive_amount DECIMAL(10 , 2 ),
+    PRIMARY KEY (empno , incentive_date)
 );
 
-create table project(
-pno int primary key,
-pname varchar(30) not null,
-ploc varchar(30)
+CREATE TABLE project (
+    pno INT PRIMARY KEY,
+    pname VARCHAR(30) NOT NULL,
+    ploc VARCHAR(30)
 );
 
 
 
-Create table assigned_to (
-empno decimal(4,0) references emp(empno) on delete cascade on update cascade,
-pno int references project(pno) on delete cascade on update cascade,
-job_role varchar(30),
-primary key(empno,pno)
+CREATE TABLE assigned_to (
+    empno DECIMAL(4 , 0 ) REFERENCES emp (empno)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    pno INT REFERENCES project (pno)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    job_role VARCHAR(30),
+    PRIMARY KEY (empno , pno)
 );
-
 show tables;
 
 INSERT INTO dept VALUES (10, 'ACCOUNTING', 'MUMBAI');
