@@ -98,3 +98,8 @@ select * from incentives;
 select * from project;
 
 select * from assigned_to;
+
+select e.empno from emp e,project p,assigned_to a 
+where e.empno=a.empno and
+a.pno=p.pno and
+p.ploc in('BENGALURU','HYDERABAD','MYSURU');
