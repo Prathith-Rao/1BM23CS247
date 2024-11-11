@@ -62,7 +62,7 @@ class External extends Student {
     }
 }
 
-public class StudentDemo {
+public class studentdemo {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         
