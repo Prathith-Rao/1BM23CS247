@@ -119,4 +119,4 @@ update emp set sal = 1.05*sal;
 select * from emp;
 
 select ename from emp
-where ename regexp '^A';
+where ename like 'A%';
