@@ -111,8 +111,7 @@ from emp e,dept d,assigned_to a,project p
 where e.deptno=d.deptno and 
 e.empno=a.empno and 
 a.pno=p.pno and d.loc=p.ploc;
- 
-update emp set sal=90000 where empno=7839;
+
 
 update emp set sal = 1.05*sal;
 
