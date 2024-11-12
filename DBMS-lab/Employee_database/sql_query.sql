@@ -56,7 +56,7 @@ INSERT INTO emp VALUES (7654, 'Ramesh', 7698, '2014-09-28', '12500.00', '30');
 INSERT INTO emp VALUES (7698, 'Kumar', 7839, '2015-05-01', '28500.00', '30');
 INSERT INTO emp VALUES (7782, 'CLARK', 7839, '2017-06-09', '24500.00', '10');
 INSERT INTO emp VALUES (7788, 'SCOTT', 7566, '2010-12-09', '30000.00', '20');
-INSERT INTO emp VALUES (7839, 'KING', NULL, '2009-11-17', '99999.99', '10');
+INSERT INTO emp VALUES (7839, 'KING', NULL, '2009-11-17', '90000', '10');
 INSERT INTO emp VALUES (7844, 'TURNER', 7698, '2010-09-08', '15000.00', '30');
 INSERT INTO emp VALUES (7876, 'ADAMS', 7788, '2013-01-12', '11000.00', '20');
 INSERT INTO emp VALUES (7900, 'JAMES', 7698, '2017-12-03', '9500.00', '30');
@@ -103,3 +103,20 @@ select e.empno from emp e,project p,assigned_to a
 where e.empno=a.empno and
 a.pno=p.pno and
 p.ploc in('BENGALURU','HYDERABAD','MYSURU');
+
+select empno from emp where empno not in (select empno from incentives);
+
+select e.empno , e.ename,d.dname,d.loc,a.job_role,p.ploc 
+from emp e,dept d,assigned_to a,project p
+where e.deptno=d.deptno and 
+e.empno=a.empno and 
+a.pno=p.pno and d.loc=p.ploc;
+ 
+update emp set sal=90000 where empno=7839;
+
+update emp set sal = 1.05*sal;
+
+select * from emp;
+
+select ename from emp
+where ename regexp '^A';
