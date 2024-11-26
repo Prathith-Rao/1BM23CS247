@@ -39,17 +39,17 @@ void enqueue(struct Queue* queue, int data) {
     queue->rear = node;
 }
 
-int dequeue(struct Queue* queue) {
+void dequeue(struct Queue* queue) {
     if (isEmpty(queue)) {
         printf("Queue underflow\n");
-        return;
+        return ;
     }
     struct Node* temp = queue->front;
     int data = temp->data;
     queue->front = queue->front->next;
     if (queue->front == NULL) queue->rear = NULL;
     free(temp);
-    return data;
+    printf("Dequeued: %d\n", data);
 }
 
 
@@ -87,10 +87,7 @@ int main() {
                 printf("Enqueued: %d\n", value);
                 break;
             case 2:
-                value = dequeue(queue);
-                if (value != -1) {
-                    printf("Dequeued: %d\n", value);
-                }
+                dequeue(queue);
                 break;
             case 3:
                 printf("Queue contents:\n");
@@ -103,6 +100,10 @@ int main() {
                 printf("Invalid choice! Please try again.\n");
         }
     }
+    return 0;
+}
+
+
     return 0;
 }
 
