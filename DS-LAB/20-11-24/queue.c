@@ -68,18 +68,42 @@ void display(struct Queue* queue) {
 
 int main() {
     struct Queue* queue = createQueue();
-    enqueue(queue, 10);
-    enqueue(queue, 20);
-    enqueue(queue, 30);
-    display(queue);
-    printf("Dequeued: %d\n", dequeue(queue));
-    display(queue);
-    enqueue(queue, 40);
-    display(queue);
-    printf("Dequeued: %d\n", dequeue(queue));
-    printf("Dequeued: %d\n", dequeue(queue));
-    printf("Dequeued: %d\n", dequeue(queue));
-    display(queue);
+    int choice, value;
+
+    while (1) {
+        printf("\nQueue Operations Menu:\n");
+        printf("1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Display\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to enqueue: ");
+                scanf("%d", &value);
+                enqueue(queue, value);
+                printf("Enqueued: %d\n", value);
+                break;
+            case 2:
+                value = dequeue(queue);
+                if (value != -1) {
+                    printf("Dequeued: %d\n", value);
+                }
+                break;
+            case 3:
+                printf("Queue contents:\n");
+                display(queue);
+                break;
+            case 4:
+                printf("Exiting program.\n");
+                exit(0);
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
     return 0;
 }
+
 
