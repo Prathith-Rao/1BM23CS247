@@ -27,7 +27,7 @@ void push(struct Node** top, int data) {
 int pop(struct Node** top) {
     if (isEmpty(*top)) {
         printf("Stack underflow\n");
-        return;
+        return NULL;
     }
     struct Node* temp = *top;
     int data = temp->data;
@@ -53,18 +53,41 @@ void display(struct Node* top) {
 
 int main() {
     struct Node* stack = NULL;
-    display(&stack);
-    push(&stack, 10);
-    push(&stack, 20);
-    push(&stack, 30);
-    display(stack);
-    printf("Popped: %d", pop(&stack));
-    display(stack);
-    push(&stack, 40);
-    display(stack);
-    printf("\nPopped: %d", pop(&stack));
-    printf("\nPopped: %d", pop(&stack));
-    printf("\nPopped: %d", pop(&stack));
-    display(&stack);
+    int choice, value;
+
+    while (1) {
+        printf("\nStack Operations Menu:\n");
+        printf("1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Display\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to push: ");
+                scanf("%d", &value);
+                push(&stack, value);
+                printf("Pushed: %d\n", value);
+                break;
+            case 2:
+                value = pop(&stack);
+                if (value != NULL) { // Assuming -1 is returned for an empty stack
+                    printf("Popped: %d\n", value);
+                }
+                break;
+            case 3:
+                printf("Stack contents:\n");
+                display(stack);
+                break;
+            case 4:
+                printf("Exiting program.\n");
+                exit(0);
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    }
+
     return 0;
 }
