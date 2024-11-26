@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Define the Node structure
 struct Node {
     int data;
     struct Node* next;
 };
 
+// Function to create a new node
 struct Node* createNode(int data) {
     struct Node* node = (struct Node*)malloc(sizeof(struct Node));
     node->data = data;
@@ -13,21 +15,24 @@ struct Node* createNode(int data) {
     return node;
 }
 
-int isEmpty(struct Node** top) {
-    return *top == NULL;
+// Function to check if the stack is empty
+int isEmpty(struct Node* top) {
+    return top == NULL;
 }
 
+// Function to push an element onto the stack
 void push(struct Node** top, int data) {
     struct Node* node = createNode(data);
     node->next = *top;
     *top = node;
-    printf("\nPushed %d",data);
+    printf("\nPushed %d onto the stack.", data);
 }
 
+// Function to pop an element from the stack
 int pop(struct Node** top) {
     if (isEmpty(*top)) {
         printf("Stack underflow\n");
-        return NULL;
+        return -1; // Return -1 to indicate the stack is empty
     }
     struct Node* temp = *top;
     int data = temp->data;
@@ -36,7 +41,7 @@ int pop(struct Node** top) {
     return data;
 }
 
-
+// Function to display the elements in the stack
 void display(struct Node* top) {
     if (isEmpty(top)) {
         printf("Stack is empty\n");
@@ -51,6 +56,7 @@ void display(struct Node* top) {
     printf("\n");
 }
 
+// Main function with switch-based menu
 int main() {
     struct Node* stack = NULL;
     int choice, value;
@@ -69,16 +75,14 @@ int main() {
                 printf("Enter value to push: ");
                 scanf("%d", &value);
                 push(&stack, value);
-                printf("Pushed: %d\n", value);
                 break;
             case 2:
                 value = pop(&stack);
-                if (value != NULL) { // Assuming -1 is returned for an empty stack
+                if (value != -1) { // Check for valid pop operation
                     printf("Popped: %d\n", value);
                 }
                 break;
             case 3:
-                printf("Stack contents:\n");
                 display(stack);
                 break;
             case 4:
