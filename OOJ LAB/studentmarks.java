@@ -16,7 +16,7 @@ class Student {
         name = sc.nextLine();
         usn = sc.nextLine();
         sem = sc.nextInt();
-        sc.nextLine(); // To consume the newline character after nextInt()
+        sc.nextLine(); 
     }
 
     void getDetails() {
@@ -60,6 +60,13 @@ class External extends Student {
             System.out.println("Subject " + (i + 1) + ": " + this.semMarks[i]);
         }
     }
+    void calculateFinalMarks(Internal internal) {
+        System.out.println("Final marks (average of internal and external marks):");
+        for (int i = 0; i < 5; i++) {
+            int finalMarks = (internal.marks[i] + this.semMarks[i]) / 2;
+            System.out.println("Subject " + (i + 1) + " final marks: " + finalMarks);
+        }
+    }
 }
 
 public class studentdemo {
@@ -76,7 +83,8 @@ public class studentdemo {
         a.getDetails();
         b.getIntMarks();
         a.getMarks();
+        a.calculateFinalMarks(b);
 
-        sc.close();  // Close the scanner once all input has been collected
+        sc.close();  
     }
 }
