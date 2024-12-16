@@ -1,68 +1,49 @@
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+class Resource1 {
+    synchronized void lock(Resource2 res2) {
+        System.out.println(Thread.currentThread().getName() + " locked Resource1");
 
-public class InterprocessCommunicationAndDeadlock {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
 
-    public static void main(String[] args) {
-        // Shared resource
-        final SharedResource sharedResource = new SharedResource();
+        System.out.println(Thread.currentThread().getName() + " trying to lock Resource2...");
+        res2.method2();
+    }
 
-        // Threads simulating interprocess communication and deadlock
-        Thread process1 = new Thread(() -> sharedResource.process1(), "Process-1");
-        Thread process2 = new Thread(() -> sharedResource.process2(), "Process-2");
-
-        process1.start();
-        process2.start();
+    synchronized void method1() {
+        System.out.println(Thread.currentThread().getName() + " is working with Resource1");
     }
 }
 
-class SharedResource {
-    private final Lock lock1 = new ReentrantLock();
-    private final Lock lock2 = new ReentrantLock();
+class Resource2 {
+    synchronized void lock(Resource1 res1) {
+        System.out.println(Thread.currentThread().getName() + " locked Resource2");
 
-    // First process attempting to acquire locks
-    public void process1() {
         try {
-            System.out.println(Thread.currentThread().getName() + " trying to acquire Lock 1...");
-            lock1.lock();
-            System.out.println(Thread.currentThread().getName() + " acquired Lock 1.");
-
-            // Simulate work
             Thread.sleep(100);
-
-            System.out.println(Thread.currentThread().getName() + " trying to acquire Lock 2...");
-            lock2.lock();
-            System.out.println(Thread.currentThread().getName() + " acquired Lock 2.");
-
         } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            lock2.unlock();
-            lock1.unlock();
-            System.out.println(Thread.currentThread().getName() + " released locks.");
+            System.out.println(e);
         }
+
+        System.out.println(Thread.currentThread().getName() + " trying to lock Resource1...");
+        res1.method1();
     }
 
-    // Second process attempting to acquire locks in reverse order
-    public void process2() {
-        try {
-            System.out.println(Thread.currentThread().getName() + " trying to acquire Lock 2...");
-            lock2.lock();
-            System.out.println(Thread.currentThread().getName() + " acquired Lock 2.");
+    synchronized void method2() {
+        System.out.println(Thread.currentThread().getName() + " is working with Resource2");
+    }
+}
 
-            // Simulate work
-            Thread.sleep(100);
+public class deadlockdemo {
+    public static void main(String[] args) {
+        Resource1 res1 = new Resource1();
+        Resource2 res2 = new Resource2();
+        Thread t1 = new Thread(() -> res1.lock(res2), "Thread-1");
+        Thread t2 = new Thread(() -> res2.lock(res1), "Thread-2");
 
-            System.out.println(Thread.currentThread().getName() + " trying to acquire Lock 1...");
-            lock1.lock();
-            System.out.println(Thread.currentThread().getName() + " acquired Lock 1.");
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            lock1.unlock();
-            lock2.unlock();
-            System.out.println(Thread.currentThread().getName() + " released locks.");
-        }
+        t1.start();
+        t2.start();
     }
 }
