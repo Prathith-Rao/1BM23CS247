@@ -1,93 +1,106 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX 100
-
-struct Queue {
-    int items[MAX];
-    int front, rear;
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
 };
 
-struct Queue* createQueue() {
-    struct Queue* q = (struct Queue*)malloc(sizeof(struct Queue));
-    q->front = -1;
-    q->rear = -1;
-    return q;
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
 }
 
-int isEmpty(struct Queue* q) {
-    return q->front == -1;
-}
-
-void enqueue(struct Queue* q, int value) {
-    if (q->rear == MAX - 1) {
-        printf("Queue is full\n");
-    } else {
-        if (q->front == -1) {
-            q->front = 0;
-        }
-        q->items[++q->rear] = value;
+struct Node* insert(struct Node* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
     }
+    if (data < root->data) {
+        root->left = insert(root->left, data);
+    } else if (data > root->data) {
+        root->right = insert(root->right, data);
+    }
+    return root;
 }
 
-int dequeue(struct Queue* q) {
-    int item;
-    if (isEmpty(q)) {
-        printf("Queue is empty\n");
-        return -1;
-    } else {
-        item = q->items[q->front];
-        if (q->front == q->rear) {
-            q->front = q->rear = -1;
-        } else {
-            q->front++;
-        }
-        return item;
+void inorderTraversal(struct Node* root) {
+    if (root == NULL) {
+        return;
     }
+    inorderTraversal(root->left);
+    printf("%d ", root->data);
+    inorderTraversal(root->right);
 }
 
-void bfs(int graph[MAX][MAX], int startVertex, int n) {
-    int visited[MAX] = {0};
-    struct Queue* q = createQueue();
-
-    visited[startVertex] = 1;
-    enqueue(q, startVertex);
-
-    printf("BFS Traversal: ");
-
-    while (!isEmpty(q)) {
-        int currentVertex = dequeue(q);
-        printf("%d ", currentVertex);
-
-        for (int i = 1; i <= n; i++) {
-            if (graph[currentVertex][i] == 1 && !visited[i]) {
-                visited[i] = 1;
-                enqueue(q, i);
-            }
-        }
+void preorderTraversal(struct Node* root) {
+    if (root == NULL) {
+        return;
     }
+    printf("%d ", root->data);
+    preorderTraversal(root->left);
+    preorderTraversal(root->right);
+}
 
-    printf("\n");
+void postorderTraversal(struct Node* root) {
+    if (root == NULL) {
+        return;
+    }
+    postorderTraversal(root->left);
+    postorderTraversal(root->right);
+    printf("%d ", root->data);
 }
 
 int main() {
-    int n, startVertex;
-    int graph[MAX][MAX];
+    struct Node* root = NULL;
+    int choice, data;
 
-    printf("Enter the number of vertices : ");
-    scanf("%d", &n);
+    while (1) {
+        printf("\nBinary Search Tree Operations:\n");
+        printf("1. Insert a node\n");
+        printf("2. In-order traversal\n");
+        printf("3. Pre-order traversal\n");
+        printf("4. Post-order traversal\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    printf("Enter the adjacency matrix:\n");
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            scanf("%d", &graph[i][j]);
+        switch (choice) {
+            case 1:
+                printf("Enter the value to insert: ");
+                scanf("%d", &data);
+                root = insert(root, data);
+                printf("Node %d inserted.\n", data);
+                break;
+
+            case 2:
+                printf("In-order traversal: ");
+                inorderTraversal(root);
+                printf("\n");
+                break;
+
+            case 3:
+                printf("Pre-order traversal: ");
+                preorderTraversal(root);
+                printf("\n");
+                break;
+
+            case 4:
+                printf("Post-order traversal: ");
+                postorderTraversal(root);
+                printf("\n");
+                break;
+
+            case 5:
+                printf("Exiting...\n");
+                exit(0);
+
+            default:
+                printf("Invalid choice, please try again.\n");
         }
     }
-
-    printf("Enter the starting vertex: ");
-    scanf("%d", &startVertex);
-
-    bfs(graph, startVertex, n);
 
     return 0;
 }
